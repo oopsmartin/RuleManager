@@ -1,0 +1,6 @@
+存的时候，数组合并成字符串，以\t作分隔符
+取的时候，将字符串分裂成数组，以\t作分裂符
+
+Rule表中RuleType， 
+RuleGroup表中的GroupName
+user表中的username都做唯一性约束

@@ -1,0 +1,45 @@
+<html>
+	<head>
+		<script type="text/javascript">
+        var req;
+        window.onload=function(){
+        }
+        function show()
+        {
+        	var value=document.getElementById('ID').value;
+        	alert(value);
+        }
+        </script>
+		<title>UpdateGroup</title>
+	</head>
+	<body>
+		<form action="UpdateGroup" method="post">
+			<table>
+			<tr>
+				<td align="middle" width=81><font color="#000000">ID</td>
+				<td width=81>
+					<select name= "ID" onChange= "show()" id="ID"> 
+
+						<option value="1">a</option> 
+						<option value="2">b</option> 
+						<option value="3">c</option> 
+						<option value="4">d</option> 
+
+
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="middle"><font color="#000000">GroupName</font></td>
+				<td><input title="groupname" maxlength=16 size=16 name="groupname"></td>
+			</tr>
+			<tr>
+				<td><input maxLength=16 size=16 value="update" name=groupname type="submit" />
+				</td>
+				<td><input maxLength=16 size=16 value="cancel" type="reset" />
+				</td>
+			</tr>
+			</table>
+		</form>
+	</body>
+</html>

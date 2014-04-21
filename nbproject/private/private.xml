@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/models/MTxRules.java</file>
+            <file>file:/D:/docs/MTxRuleManager/web/addgroup.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/servlets/AddGroup.java</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/servlets/AddUser.java</file>
+            <file>file:/D:/docs/MTxRuleManager/web/index.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/models/MTxRule.java</file>
+            <file>file:/D:/docs/MTxRuleManager/web/iframes/top.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/web/updategroup.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/servlets/UpdateUser.java</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/models/MTxUsers.java</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/models/MTxUser.java</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/servlets/AddRule.java</file>
+            <file>file:/D:/docs/MTxRuleManager/web/updaterule.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/web/listrules.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/web/listusers.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/web/addrule.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/models/MTxRuleGroup.java</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/models/MTxRuleGroups.java</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/servlets/UpdateRule.java</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/utils/MTxEngineUtils.java</file>
+            <file>file:/D:/docs/MTxRuleManager/web/adduser.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/web/updateuser.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/web/WEB-INF/web.xml</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/servlets/UpdateGroup.java</file>
+            <file>file:/D:/docs/MTxRuleManager/web/css/main.css</file>
+            <file>file:/D:/docs/MTxRuleManager/web/listgroups.jsp</file>
+            <file>file:/D:/docs/MTxRuleManager/src/java/org/cncert/mtxrulemanager/utils/DBUtils.java</file>
+        </group>
+    </open-files>
+</project-private>
