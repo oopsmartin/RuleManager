@@ -66,9 +66,9 @@ public class UpdateGroup extends HttpServlet {
             	   break;
                }
             }
-            //System.out.printf("groupName is %s\n",groupName);
+            
             xml = "\n\t<groupname>"+groupName+"</groupname>";
-            //System.out.printf("%s", xml_start+xml_desc+xml+xml_end);
+            
             response.getWriter().write(xml_start+xml_desc+xml+xml_end);
             
             

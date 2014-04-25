@@ -12,7 +12,8 @@
 		var req;
                         
         function ruletype_validate()
-        {       	
+        {   
+        	
         	var ruletype=document.getElementById('RuleType').value;            
         	alert(ruletype);
             var url="AddRule?RuleType="+escape(ruletype);
@@ -41,7 +42,9 @@
                 if(req.status == 200)
                 {
                 	alert("200");
-                    parseMessage();
+                    var flag = parseMessage();
+                    if(flag==false)
+                    	return;                    
                 }else{
                     alert("Not able to retrieve description"+req.statusText);
                 }
@@ -62,10 +65,11 @@
                 if(docInput.value==xInput[i].childNodes[0].nodeValue)
             	   {
             	     alert('The RuleType already exists, please select other ruletype');
-            	     return false;
+            	     location.reload();
+            	     break;
             	   }
             }
-            return true;
+            
          }
 
 
@@ -75,15 +79,21 @@
   			if(ruletype_validate())
   			  {
   			
+  				alert(document.getElementById('EffectedTime').getAttribute('value'));
   				alert("after validate");
-	  			if(document.getElementById('deployplaces').getAttribute('value').length!=0 &&
-	  				document.getElementById('EventAction').getAttribute('value').length!=0 &&
+  				 				
+	  			if((document.getElementById('deployNational').getAttribute('value').length!=0 ||
+	  				document.getElementById('deployProvincial').getAttribute('value').length!=0 ||
+	  				document.getElementById('deployGate').getAttribute('value').length!=0 ||
+	  				document.getElementById('deployProvider').getAttribute('value').length!=0 )&&
+	  				(document.getElementById('EventAction').getAttribute('value').length!=0 &&
 	  				document.getElementById('EventType').getAttribute('value').length!=0 &&
 	  				document.getElementById('MatchPattern').getAttribute('value').length!=0 &&
 	  				document.getElementById('Protocol').getAttribute('value').length!=0 &&
 	  				document.getElementById('RuleName').getAttribute('value').length!=0 &&
-	  				document.getElementById('RuleNumber').getAttribute('value').length!=0)
-	  		  		{  			
+	  				document.getElementById('RuleNumber').getAttribute('value').length!=0))
+	  		  		{  	
+	  					
 	  			   		alert('submit!');
 		  		   		document.getElementById('AddRule').submit();	  			
 	  		  		}
@@ -92,6 +102,7 @@
   			  }
   		}
         
+  		/**
 		var $ = function (id) {
 		    return "string" == typeof id ? document.getElementById(id) : id;
 		};
@@ -266,7 +277,7 @@
 		 	
 		    var csGroups = new CascadeSelect(selGroups, menuGroups, { Default: valGroups });
 		    
-		    /**
+		    
 		    $("btnA").onclick=function(){cs.ShowEmpty=!cs.ShowEmpty;}
 		    
 		    $("btnB").onclick=function(){
@@ -286,9 +297,10 @@
 		    $("btnC").onclick=function(){
 		        cs.Delete(3)
 		    };
-		    **/
+		    
 		}
-		
+	**/	
+	
 	</script>
 	<style type="text/css">
 	.sel select{ width:100px;}
@@ -309,19 +321,21 @@
 				<td align="left"><span class="rq" style="color:red">*</span><font color="#000000">DeployPlaces</font>
 				</td>
 				<td>
-				<div class="sel" id="deployplaces">
-				<checkbox>
-				<input type="checkbox" value="">
-				
-				</checkbox>
+					<input type="checkbox" name="deployNational" id="deployNational">国际
+					<input type="checkbox" name="deployProvincial" id="deployProvincial">省际
+					<input type="checkbox" name="deployGate" id="deployGate">关口
+					<input type="checkbox" name="deployProvider" id="deployProvider">供应商
+				</td>
+				<!--
+				<td>
+				<div class="sel" id="deployplaces">				
 					<select id="sel1" name="sel1"></select>
 					<select id="sel2" name="sel2"></select>				
 					<select id="sel3" name="sel3"></select>
 					<select id="sel4" name="sel4"></select>							
 				</div>
-				</td>
+				</td>			
 				
-				<!-- 
 				<td>
 					<input id="btnA" type="button" value="显示/不显示空值"/>
 					<input id="btnB" type="button" value="添加菜单"/>
@@ -335,8 +349,8 @@
 				<td align="left" ><font color="#000000">EffectedTime</font>
 				</td>
 				<td>
-					<input type="text" id="EffectedTime" name="EffectedTime" onclick="return showCalendar('EffectedTime', 'y-mm-dd');"  />				
-					<select name="EffectedHour" id="EffectedHour">
+					<input type="text" id="EffectedTime" name="EffectedTime" onclick="return showCalendar('EffectedTime', 'y-mm-dd');" />				
+					<select id="EffectedHour" name="EffectedHour" >
 						<option value="00">00:00</option>
 						<option value="01">01:00</option>
 						<option value="02">02:00</option>
@@ -362,8 +376,7 @@
 						<option value="22">22:00</option>
 						<option value="23">23:00</option>
 					</select>
-				</td>
-				
+				</td>				
 			</tr>
 			
 			<tr>
@@ -398,7 +411,7 @@
 				<td align="left" ><font color="#000000">ExpiredTime</font>
 				</td>
 				<td>
-					<input type="text" id="ExpiredTime" name="ExpiredTime" onclick="return showCalendar('ExpiredTime', 'y-mm-dd');"  />
+					<input type="text" id="ExpiredTime" name="ExpiredTime" onclick="return showCalendar('ExpiredTime', 'y-mm-dd');" >
 					<select name="ExpiredHour" id="ExpiredHour">
 						<option value="00">00:00</option>
 						<option value="01">01:00</option>
@@ -433,13 +446,19 @@
 				<td align="left" ><font color="#000000">Groups</font>
 				</td>
 				<td>
+					<input type="checkbox" name="group1" id="group1">1					
+					<input type="checkbox" name="group2" id="group2">2					
+					<input type="checkbox" name="group3" id="group3">3					
+					<input type="checkbox" name="group4" id="group4">4				
+					
+					<!--
 					<div class="sel" id="groups">
 						<select id="sel5" name="sel5"></select>
 						<select id="sel6" name="sel6"></select>
 						<select id="sel7" name="sel7"></select>
 						<select id="sel8" name="sel8"></select>									
 					</div>
-					<!-- 
+					 
 					<select name="Groups">
 						<option value="1">1</option>
   						<option value="2">2</option>
@@ -447,11 +466,9 @@
   						<option value="4">4</option>
 					</select>
 					-->				
-				</td>
-				
+				</td>				
 			</tr>
-			<tr>
-				
+			<tr>				
 				<td align="left" ><font color="#000000">IsEnabled</font>
 				</td>
 				<td>					
@@ -567,6 +584,11 @@
 				</td>
 								
 			</tr>
+<%
+String username = request.getParameter("CreateBy");
+System.out.printf("addrule username is %s\n",username);
+%>
+			
 			<tr>
 				
 				<td >
@@ -577,7 +599,14 @@
 				</td>
 				
 			</tr>
+			<tr>
+				<td>
+					<a href="main.jsp">返回</a>
+				</td>
+			</tr>
 			</table>
+			<input type="hidden" name="createBy" id="createBy" value="<%= username%>" />
+			
 		</form>
 	</body>
 </html>

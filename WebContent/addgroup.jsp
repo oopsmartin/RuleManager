@@ -90,6 +90,11 @@
 					<input maxLength=16 size=16 value="取消" type="reset" />
 				</td>
 			</tr>
+			<tr>
+				<td>
+					<a href="main.jsp">返回</a>
+				</td>
+			</tr>
 			</table>			
 		</form>
 	</body>

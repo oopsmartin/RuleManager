@@ -8,6 +8,7 @@
 	function perform(id)
 	{
 		alert(id);
+		alert(document.getElementsByName("CreateBy"));
 		document.getElementById('activity').setAttribute('value',id);
 		document.getElementById('redirectmenu').submit();
 	}
@@ -33,9 +34,9 @@
 			<td><input name="delUser" id="delUser" type="button" value="删除" onclick="perform(this.id)"/></td>
 		</tr>
 		<tr>
-			<td><input name="updateGroup" id="modifyGroup" type="button" value="修改" onclick="perform(this.id)"/></td>
-			<td><input name="updateRule" id="modifyRule" type="button" value="修改" onclick="perform(this.id)"/></td>
-			<td><input name="updateUser" id="modifyUser" type="button" value="修改" onclick="perform(this.id)"/></td>
+			<td><input name="updateGroup" id="updateGroup" type="button" value="修改" onclick="perform(this.id)"/></td>
+			<td><input name="updateRule" id="updateRule" type="button" value="修改" onclick="perform(this.id)"/></td>
+			<td><input name="updateUser" id="updateUser" type="button" value="修改" onclick="perform(this.id)"/></td>
 		</tr>
 		<tr>
 			<td><input name="searchGroup" id="searchGroup" type="button" value="查询" onclick="perform(this.id)"/></td>
@@ -44,6 +45,11 @@
 		</tr>
 	</table>
 	<input type="hidden" name="activity" id="activity" value='no'>
+<%
+String username = request.getParameter("CreateBy");
+System.out.printf("createBy is %s\n",username);
+%>
+	<input type="hidden" name="createBy" id="createBy" value="<%= username%>">	
 	</form>
 </body>
 </html>

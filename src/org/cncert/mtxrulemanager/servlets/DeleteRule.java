@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.cncert.mtxrulemanager.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,15 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.cncert.mtxrulemanager.models.MTxRule;
-import org.cncert.mtxrulemanager.models.MTxRuleGroup;
-import org.cncert.mtxrulemanager.models.MTxRuleGroups;
+
 import org.cncert.mtxrulemanager.models.MTxRules;
 
-/**
- *
- * @author GaoSheng
- */
-public class UpdateRule extends HttpServlet {
+public class DeleteRule extends HttpServlet {
 
 	MTxRules rules = null;
 	List<MTxRule> ruleList = null;
@@ -61,8 +49,8 @@ public class UpdateRule extends HttpServlet {
             	MTxRule tmpRule = iter.next();
             	
                if(tmpRule.getID()==ID){
-            	   String effectedTime = "";
-            	   String expiredTime = "";            	   
+            	   String effectedTime = null;
+            	   String expiredTime = null;            	   
             	   String remark = "";
             	   String remark1 = "";
             	   String remark2 = "";
@@ -74,8 +62,8 @@ public class UpdateRule extends HttpServlet {
             	   int group2 = 0;
             	   int group3 = 0;
             	   int group4 = 0;
-            	   String effectedHour = "";
-            	   String expiredHour = "";
+            	   String effectedHour = "00";
+            	   String expiredHour = "00";
             	   
             	String createBy = tmpRule.getCreateBy();
             	System.out.printf("refresh createBy is %s\n", createBy);
@@ -96,14 +84,12 @@ public class UpdateRule extends HttpServlet {
             		System.out.printf("effected time is %s\n", tmpRule.getEffectedTime().toString().substring(0, 10));
             		
             		effectedTime = tmpRule.getEffectedTime().toString().substring(0, 10);
-            		effectedHour = tmpRule.getEffectedTime().toString().substring(11,12);
             	}
             	String eventAction = tmpRule.getEventAction();
             	String eventType = tmpRule.getEventType();
             	if(tmpRule.getExpiredTime()!=null){
             		
             		expiredTime = tmpRule.getExpiredTime().toString().substring(0, 10);
-            		expiredHour = tmpRule.getExpiredTime().toString().substring(11,12);
             	}
             	
             	String groups = tmpRule.getGroups(0);
@@ -138,7 +124,8 @@ public class UpdateRule extends HttpServlet {
             	String ruleName = tmpRule.getRuleName();
             	String ruleNumber = tmpRule.getRuleNumber();
             	String ruleType = tmpRule.getRuleType();
-            	
+            	effectedHour = Integer.valueOf(tmpRule.getEffectedTime().getHours()).toString();
+            	expiredHour = Integer.valueOf(tmpRule.getExpiredTime().getHours()).toString();
             	
             	xml.append("\n<createBy>"+createBy+"</createBy>");
             	
@@ -207,31 +194,19 @@ public class UpdateRule extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
         	MTxRule rule = new MTxRule();
-        	String[] deployPlaces = new String[4];
-        	String[] groups = new String[4];
         	
+        	rule.setID(Integer.valueOf(request.getParameter("ID")));
         	rule.setCreateBy(request.getParameter("createBy"));
-        	
-        	deployPlaces[0] = request.getParameter("deployNational")==null?"\\t":"国际\\t";
-        	deployPlaces[1] = request.getParameter("deployProvincial")==null?"\\t":"省际\\t";
-        	deployPlaces[2] = request.getParameter("deployGate")==null?"\\t":"关口\\t";
-        	deployPlaces[3] = request.getParameter("deployProvider")==null?"\\t":"供货商\\t";
-        	rule.setDeployPlaces(deployPlaces);
-        	
-        	System.out.printf("test time is %s\n", request.getParameter("effectedTime")+" "+request.getParameter("effectedHour")+":00:00");
+        	rule.setDeployPlaces(request.getParameterValues("deployPlaces"));
+        	System.out.printf("test time is %s\n", request.getParameter("effectedTime")+" "+request.getParameter("effectedHour")+":00:00.00");
         	if(request.getParameter("effectedTime")!=null)
         		rule.setEffectedTime(java.sql.Timestamp.valueOf(request.getParameter("effectedTime")+" "+request.getParameter("effectedHour")+":00:00.00"));
         	rule.setEventAction(request.getParameter("eventAction"));
         	rule.setEventType(request.getParameter("eventType"));
         	if(request.getParameter("expiredTime")!=null)
         		rule.setExpiredTime(java.sql.Timestamp.valueOf(request.getParameter("expiredTime")+" "+request.getParameter("expiredHour")+":00:00.00"));
-        	
-        	groups[0] = request.getParameter("group1")==null?"\\t":"group1\\t";
-        	groups[1] = request.getParameter("group2")==null?"\\t":"group2\\t";
-        	groups[2] = request.getParameter("group3")==null?"\\t":"group3\\t";
-        	groups[3] = request.getParameter("group4")==null?"\\t":"group4\\t";
-        	rule.setGroups(groups);
-        	
+        	if(request.getParameter("groups")!=null)
+        		rule.setGroups(request.getParameterValues("groups"));
         	if(request.getParameter("isEnabled")!=null)
         		rule.setIsEnabled(request.getParameter("isEnabled").equals("true")?true:false);
         	rule.setMatchPattern(request.getParameter("matchPattern"));
@@ -252,7 +227,7 @@ public class UpdateRule extends HttpServlet {
         	{
         		rules = new MTxRules();
         	}
-        	rules.update(rule);
+        	rules.remove(rule);
         } finally {
             out.close();
         }
@@ -267,7 +242,7 @@ public class UpdateRule extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+  
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	System.out.println("doGet");
@@ -283,7 +258,7 @@ public class UpdateRule extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	System.out.println("doPost");
@@ -291,12 +266,7 @@ public class UpdateRule extends HttpServlet {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
+   
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

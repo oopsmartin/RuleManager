@@ -17,7 +17,7 @@ import org.cncert.mtxrulemanager.models.MTxRuleGroups;
 /**
  * Servlet implementation class Redirect
  */
-@WebServlet("/Redirect")
+
 public class RedirectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,10 +36,15 @@ public class RedirectServlet extends HttpServlet {
         try {
         	String id = request.getParameter("activity");
         	System.out.printf("redirect to %s\n", id);
-        	if(id.equals("addGroup"))
-    			response.sendRedirect("addgroup.jsp");
+        	
+        	if(id.equals("addGroup"))        	
+    			response.sendRedirect("addgroup.jsp");        	
     		else if(id.equals("addRule"))
-    			response.sendRedirect("addrule.jsp");
+    		{
+    			String username = (String)request.getParameter("createBy");
+    			System.out.printf("username ie CreateBy is %s\n",username);
+    			response.sendRedirect("addrule.jsp?CreateBy="+username);
+    		}
     		else if(id.equals("addUser"))
     			response.sendRedirect("adduser.jsp");
     		else if(id.equals("delGroup"))
@@ -52,14 +57,14 @@ public class RedirectServlet extends HttpServlet {
     			response.sendRedirect("updategroup.jsp");
     		else if(id.equals("updateRule"))
     			response.sendRedirect("updaterule.jsp");
-    		else if(id.equals("updateuser"))
+    		else if(id.equals("updateUser"))
     			response.sendRedirect("updateuser.jsp");
     		else if(id.equals("searchGroup"))
-    			response.sendRedirect("showgroup.jsp");
+    			response.sendRedirect("searchgroup.jsp");
     		else if(id.equals("searchRule"))
-    			response.sendRedirect("showrule.jsp");
+    			response.sendRedirect("searchrule.jsp");
     		else if(id.equals("searchUser"))
-    			response.sendRedirect("showuser.jsp");
+    			response.sendRedirect("searchuser.jsp");
         } catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

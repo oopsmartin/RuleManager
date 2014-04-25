@@ -55,12 +55,14 @@ public class AddRule extends HttpServlet {
             System.out.printf("inputUsername is %s\n",inputRuleType);
             for(i=0;i<ruleList.size();i++)
             {
-               ruleType = ((MTxRule)ruleList.get(i)).getRuleType();        	
+               ruleType = ((MTxRule)ruleList.get(i)).getRuleType(); 
+               xml += "\n\t<ruletype>"+ruleType+"</ruletype>";
                if (inputRuleType.equals(ruleType))
-               {            	   
+               {    
+            	   response.getWriter().write(xml_start+xml_desc+xml+xml_end);
             	   return false;
                }
-               xml += "\n\t<ruletype>"+ruleType+"</ruletype>";
+               
             }           
             
             System.out.printf("%s", xml_start+xml_desc+xml+xml_end);
@@ -92,66 +94,70 @@ public class AddRule extends HttpServlet {
             MTxRule rule = new MTxRule();
             rules = new MTxRules();
             
-            System.out.printf("CreateBy is %s",request.getParameter("CreateBy"));
-            System.out.println();
-            rule.setCreateBy(request.getParameter("CreateBy"));
-                                    
-            rule.setEffectedTime(java.sql.Timestamp.valueOf((String)request.getParameter("EffectedTime")+" "+(String)request.getParameter("EffectedHour")+":00:00"));
-            System.out.printf("EventAction is %s\n",request.getParameter("Eventaction"));
+            System.out.printf("CreateBy is %s\n",request.getParameter("createBy"));
+            if(request.getParameter("ExpiredTime")!=null)
+            	rule.setCreateBy(request.getParameter("createBy"));
             
-            rule.setEventAction(request.getParameter("Eventaction"));
+            System.out.printf("time is %s\n",request.getParameter("EffectedTime")+" "+request.getParameter("EffectedHour")+":00:00");
+            if(request.getParameter("EffectedTime")!=null)
+               rule.setEffectedTime(java.sql.Timestamp.valueOf((String)request.getParameter("EffectedTime")+" "+(String)request.getParameter("EffectedHour")+":00:00"));            
+            	
+            System.out.printf("EventAction is %s\n",request.getParameter("Eventaction"));
+            if(request.getParameter("ExpiredTime")!=null)
+            	rule.setEventAction(request.getParameter("Eventaction"));
             System.out.printf("EventType is %s\n",request.getParameter("EventType"));
             
             rule.setEventType(request.getParameter("EventType"));
-            System.out.printf("ExpiredTime is %s\n",java.sql.Date.valueOf(request.getParameter("ExpiredTime")));
+            //System.out.printf("ExpiredTime is %s\n",java.sql.Date.valueOf(request.getParameter("ExpiredTime")));
             
-            rule.setExpiredTime(java.sql.Timestamp.valueOf((String)request.getParameter("ExpiredTime")+" "+(String)request.getParameter("ExpiredHour")+":00:00"));
+            if(request.getParameter("ExpiredTime")!=null)
+            	rule.setExpiredTime(java.sql.Timestamp.valueOf((String)request.getParameter("ExpiredTime")+" "+(String)request.getParameter("ExpiredHour")+":00:00"));
             System.out.printf("IsEnabled is %s\n",request.getParameter("IsEnabled"));
-            
-            rule.setIsEnabled(request.getParameter("IsEnabled").equals("on")?true:false);
+            if(request.getParameter("IsEnabled")!=null)
+            	rule.setIsEnabled(request.getParameter("IsEnabled").equals("on")?true:false);
             System.out.printf("MatchPattern is %s\n",request.getParameter("MatchPattern"));
-            
-            rule.setMatchPattern(request.getParameter("MatchPattern"));
+            if(request.getParameter("MatchPattern")!=null)
+            	rule.setMatchPattern(request.getParameter("MatchPattern"));
             System.out.printf("Protocol is %s\n",request.getParameter("Protocol"));
-            
-            rule.setProtocol(request.getParameter("Protocol"));
+            if(request.getParameter("Protocol")!=null)
+            	rule.setProtocol(request.getParameter("Protocol"));
             Timestamp currentTime = new Timestamp(new Date().getTime());
             rule.setRegTime(currentTime);
             System.out.printf("Remark is %s\n",request.getParameter("Remark"));
-            
-            rule.setRemark(request.getParameter("Remark"));
+            if(request.getParameter("Remark")!=null)
+            	rule.setRemark(request.getParameter("Remark"));
             System.out.printf("Remark1 is %s\n",request.getParameter("Remark1"));
-            
-            rule.setRemark1(request.getParameter("Remark1"));
+            if(request.getParameter("Remark1")!=null)
+            	rule.setRemark1(request.getParameter("Remark1"));
             System.out.printf("Remark2 is %s\n",request.getParameter("Remark2"));
-            
-            rule.setRemark2(request.getParameter("Remark2"));
+            if(request.getParameter("Remark2")!=null)
+            	rule.setRemark2(request.getParameter("Remark2"));
             System.out.printf("ReverseMatch is %s\n",request.getParameter("ReverseMatch"));
-            
-            rule.setReverseMatch(request.getParameter("ReverseMatch").equals("true")?true:false);
+            if(request.getParameter("ReverseMatch")!=null)
+            	rule.setReverseMatch(request.getParameter("ReverseMatch").equals("true")?true:false);
             System.out.printf("RuleName is %s\n",request.getParameter("RuleName"));
-            
-            rule.setRuleName(request.getParameter("RuleName"));
+            if(request.getParameter("RuleName")!=null)
+            	rule.setRuleName(request.getParameter("RuleName"));
             System.out.printf("RuleNumber is %s\n",request.getParameter("RuleNumber"));
-            
-            rule.setRuleNumber(request.getParameter("RuleNumber"));            
+            if(request.getParameter("RuleNumber")!=null)
+            	rule.setRuleNumber(request.getParameter("RuleNumber"));            
             System.out.printf("RuleType is %s\n",request.getParameter("RuleType"));
-            
-            rule.setRuleType(request.getParameter("RuleType"));
+            if(request.getParameter("RuleType")!=null)
+            	rule.setRuleType(request.getParameter("RuleType"));
             
             String[] Places = new String[4];
-            Places[0] = request.getParameter("sel1");
-            Places[1] = request.getParameter("sel2");
-            Places[2] = request.getParameter("sel3");
-            Places[3] = request.getParameter("sel4");
+            Places[0] = request.getParameter("deployNational")!=null?"国际":"";
+            Places[1] = request.getParameter("deployProvincial")!=null?"省际":"";
+            Places[2] = request.getParameter("deployGate")!=null?"关口":"";
+            Places[3] = request.getParameter("deployProvider")!=null?"供应商":"";
             rule.setDeployPlaces(Places);
             System.out.printf("places are %s\n", rule.getDeployPlaces());           
             
             String[] Groups = new String[4];
-            Groups[0] = request.getParameter("sel5");
-            Groups[1] = request.getParameter("sel6");
-            Groups[2] = request.getParameter("sel7");
-            Groups[3] = request.getParameter("sel8");
+            Groups[0] = request.getParameter("group1")!=null?"group1":"";
+            Groups[1] = request.getParameter("group2")!=null?"group2":"";
+            Groups[2] = request.getParameter("group3")!=null?"group3":"";
+            Groups[3] = request.getParameter("group4")!=null?"group4":"";
             rule.setGroups(Groups);
             System.out.printf("groups are %s\n", rule.getGroups());            
             
@@ -178,8 +184,8 @@ public class AddRule extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	System.out.println("get");
-    	if(validate(request, response))
-    		processRequest(request, response);
+    	validate(request, response);
+    	//processRequest(request, response);
     }
 
     /**

@@ -2,11 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>AddUser</title>
-		<link type="text/css" rel="stylesheet" href="calendar.css" >
-		<script type="text/javascript" src="calendar.js"></script>  
-		<script type="text/javascript" src="calendar-zh.js"></script>
-		<script type="text/javascript" src="calendar-setup.js" ></script>
+		<title>AddUser</title>		
 		<script language="javascript" >
 		
 		var req;
@@ -130,6 +126,11 @@
 				<td><input maxLength=16 size=16 value="增加" type="button" onclick="check()"  />
 				</td>
 				<td><input maxlength=16 size=16 value="取消" type="reset" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<a href="main.jsp">返回</a>
 				</td>
 			</tr>
 		</table>		

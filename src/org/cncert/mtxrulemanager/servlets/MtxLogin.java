@@ -59,34 +59,30 @@ public class MtxLogin extends HttpServlet {
             condition.put("Password", password);
             System.out.printf("condition size is %d\n", condition.size());
             userList = users.search(condition);
-        	for(Iterator<MTxUser> iter = userList.listIterator();iter.hasNext();){
-        		tmpUser = (MTxUser)iter.next();
-        		System.out.printf("UserName is %s",tmpUser.getUserName());
-        		System.out.println();
-        	}
+        	Iterator<MTxUser> iter = userList.listIterator();
+        	tmpUser = (MTxUser)iter.next();
+        	System.out.printf("UserName is %s",tmpUser.getUserName());
+        	System.out.println();
+        	
         	/**
             if(users.search(condition)!=null)
             {
             	tmpUser = (MTxUser)users.search(condition).get(0);
             }
-            **/
-        	
-            System.out.printf("checked is %s\n", request.getParameter("checked"));
-            
-                Cookie cookieuser = new Cookie("user",username+"-"+password); 
-                //设定有效时间  以秒(s)为单位
-                cookieuser.setMaxAge(60); 
-                //设置Cookie路径和域名
-                cookieuser.setPath("/") ;
-                cookieuser.setDomain(".zl.org") ;  //域名要以“.”开头
-                response.addCookie(cookieuser); 
+            **/                         
+               request.getSession().setMaxInactiveInterval(600);
                               
                if(tmpUser.getUserName()!="")
-            	   response.sendRedirect("main.jsp");
+               {   
+            	   String createBy = tmpUser.getUserName();
+            	   System.out.printf("tmpUser ID is %d\n",tmpUser.getID());
+            	   String url = "main.jsp?CreateBy="+createBy;
+            	   response.sendRedirect(url);
+               }
                else
             	   response.setContentType("text/html;charset=UTF-8");               	   
                	   out.println("<html>");
-               	   out.println("<head><title>set cookies </title></head>");
+               	   out.println("<head><title>wrong input</title></head>");
                	   out.println("<body>");
                	   out.println("<h2>invalid input</h2>");
                	   out.println("</body>");

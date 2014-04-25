@@ -17,12 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.cncert.mtxrulemanager.models.MTxRuleGroup;
-import org.cncert.mtxrulemanager.models.MTxRuleGroups;
+
 import org.cncert.mtxrulemanager.models.MTxUser;
 import org.cncert.mtxrulemanager.models.MTxUsers;
 
-public class UpdateUser extends HttpServlet {
+public class DeleteUser extends HttpServlet {
 
 	MTxUsers users = null;
 	List<MTxUser> userList = null;
@@ -41,10 +40,17 @@ public class UpdateUser extends HttpServlet {
             
             String xml = "";            
             int ID;
-            String username = null;
+            String username = "";
+            String authorizedIP = "";
+            String createTime = "";
+            String effectTime = "";
+            String expireTime = "";
+            String lastLoginTime = "";
+            
             String xml_start = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
             String xml_desc = "<web-app xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://java.sun.com/xml/ns/javaee\" xmlns:web=\"http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd\" xsi:schemaLocation=\"http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd\" version=\"2.5\">";
             String xml_end = "\n</web-app>";
+            
             String targetId = (String)request.getParameter("ID").toString();
             
             for(Iterator<MTxUser> iter=userList.iterator();iter.hasNext();)
@@ -53,12 +59,22 @@ public class UpdateUser extends HttpServlet {
                ID = tmpUser.getID();        	
                if (targetId.equals(new Integer(ID).toString()))
                {
+            	   authorizedIP = tmpUser.getAuthorizedIP();
+            	   createTime = String.valueOf(tmpUser.getCreateTime());
+            	   effectTime = String.valueOf(tmpUser.getEffectTime());
+            	   expireTime = String.valueOf(tmpUser.getExpireTime());
+            	   lastLoginTime = String.valueOf(tmpUser.getLastLoginTime());
             	   username = tmpUser.getUserName();
             	   break;
                }
             }
             
-            xml = "\n\t<username>"+username+"</username>";
+            xml += "\n\t<authorizedIP>"+authorizedIP+"</authorizedIP>";
+            xml += "\n\t<createTime>"+createTime+"</createTime>";
+            xml += "\n\t<effectTime>"+effectTime+"</effectTime>";
+            xml += "\n\t<expireTime>"+expireTime+"</expireTime>";
+            xml += "\n\t<lastLoginTime>"+lastLoginTime+"</lastLoginTime>";
+            xml += "\n\t<username>"+username+"</username>";
             
             response.getWriter().write(xml_start+xml_desc+xml+xml_end);
             
@@ -81,7 +97,7 @@ public class UpdateUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-        	users = new MTxUsers();
+        	
             MTxUser user = new MTxUser();
             String userIP = null;
             String username = request.getParameter("username");
@@ -96,7 +112,10 @@ public class UpdateUser extends HttpServlet {
      		  user.setAuthorizedIP(userIP);            
             user.setUserName(username);
             user.setPassword(password);
-            users.update(user);
+            
+            if(users==null)
+            	users = new MTxUsers();
+            users.remove(user);
             
             
         } finally {
@@ -113,7 +132,7 @@ public class UpdateUser extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+    
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	System.out.println("doGet");
@@ -129,7 +148,7 @@ public class UpdateUser extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	System.out.println("doPost");
@@ -142,7 +161,7 @@ public class UpdateUser extends HttpServlet {
      *
      * @return a String containing servlet description
      */
-    @Override
+    
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>

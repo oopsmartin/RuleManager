@@ -5,10 +5,6 @@
     <servlet-class>org.cncert.mtxrulemanager.servlets.AddRule</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>UpdateServlet</servlet-name>
-    <servlet-class>org.cncert.mtxrulemanager.servlets.UpdateRule</servlet-class>
-  </servlet>
-  <servlet>
     <servlet-name>AddGroup</servlet-name>
     <servlet-class>org.cncert.mtxrulemanager.servlets.AddGroup</servlet-class>
     <init-param>
@@ -25,25 +21,49 @@
     <servlet-class>org.cncert.mtxrulemanager.servlets.AddUser</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>RedirectServlet</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.RedirectServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>MtxLogin</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.MtxLogin</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SearchGroup</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.SearchGroup</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdateRule</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.UpdateRule</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>UpdateUser</servlet-name>
     <servlet-class>org.cncert.mtxrulemanager.servlets.UpdateUser</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>RedirectServlet</servlet-name>
-  	<servlet-class>org.cncert.mtxrulemanager.servlets.RedirectServlet</servlet-class>
+    <servlet-name>SearchRule</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.SearchRule</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>MtxLogin</servlet-name>
-  	<servlet-class>org.cncert.mtxrulemanager.servlets.MtxLogin</servlet-class>
+    <servlet-name>SearchUser</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.SearchUser</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteGroup</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.DeleteGroup</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteRule</servlet-name>
+    <servlet-class>org.cncert.mtxrulemanager.servlets.DeleteRule</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DeleteUser</servlet-name>
+  	<servlet-class>org.cncert.mtxrulemanager.servlets.DeleteUser</servlet-class>
   </servlet>
   
   <servlet-mapping>
     <servlet-name>AddRule</servlet-name>
     <url-pattern>/AddRule</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>UpdateServlet</servlet-name>
-    <url-pattern>/UpdateServlet</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>AddGroup</servlet-name>
@@ -58,18 +78,45 @@
     <url-pattern>/AddUser</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
+    <servlet-name>RedirectServlet</servlet-name>
+    <url-pattern>/RedirectServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MtxLogin</servlet-name>
+    <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchGroup</servlet-name>
+    <url-pattern>/SearchGroup</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateRule</servlet-name>
+    <url-pattern>/UpdateRule</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
     <servlet-name>UpdateUser</servlet-name>
     <url-pattern>/UpdateUser</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>RedirectServlet</servlet-name>
-  	<url-pattern>/RedirectServlet</url-pattern>
+    <servlet-name>SearchRule</servlet-name>
+    <url-pattern>/SearchRule</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>MtxLogin</servlet-name>
-  	<url-pattern>/Login</url-pattern>
+    <servlet-name>SearchUser</servlet-name>
+    <url-pattern>/SearchUser</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>DeleteGroup</servlet-name>
+    <url-pattern>/DeleteGroup</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteRule</servlet-name>
+    <url-pattern>/DeleteRule</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DeleteUser</servlet-name>
+  	<url-pattern>/DeleteUser</url-pattern>
+  </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>
   </session-config>

@@ -9,7 +9,7 @@
         {
             var zhi=document.getElementById('ID').value;
             //alert(zhi+10);
-            var url="UpdateGroup?ID="+escape(zhi);
+            var url="DeleteGroup?ID="+escape(zhi);
             if(window.XMLHttpRequest)
             {
                 req=new XMLHttpRequest();
@@ -41,26 +41,33 @@
         
         function parseMessage()
         {
-            var xmlDoc=req.responseXML.documentElement;
-            var xInput=xmlDoc.getElementsByTagName('groupname');
-            //alert(xInput[0].childNodes[0].nodeValue);
-            var docInput = document.getElementById('groupname');
-            docInput.setAttribute('value',xInput[0].childNodes[0].nodeValue);
-                           
+        	
+            var xmlDoc=req.responseXML.documentElement;            
+            var xInputGroupName=xmlDoc.getElementsByTagName('groupname');            
+            var xInputCreateTime=xmlDoc.getElementsByTagName('createTime'); 
+            alert("doc");
+            //var docInputGroupName = document.getElementById('groupname');
+            //var docInputCreateTime = document.getElementsById('createTime');
+            alert(xInputGroupName[0].childNodes[0].nodeValue);
+            alert(document.getElementById('groupname').value);
+            
+            document.getElementById('groupname').setAttribute('value',xInputGroupName[0].childNodes[0].nodeValue);
+            document.getElementById('createTime').setAttribute('value',xInputCreateTime[0].childNodes[0].nodeValue);               
          }
              
         
     </script>
 	
-		<title>UpdateGroup</title>
+		<title>DeleteGroup</title>
 	</head>
 	<body>
-		<form action="UpdateGroup" method="post">
+		<form action="DeleteGroup" method="post">
 			<table>
 			<tr>
 				<td align="middle" width=81><font color="#000000">ID</td>
 				<td width=81>
 					<select name="ID" id="ID" onChange= "change_select()"> 
+						<option value="default">序号</option>
 <%
 String sql = "select ID from rulegroup order by ID";
 DBUtils db = new DBUtils("jdbc:mysql://127.0.0.1:3306/mtxrulemanager", "root", "8086W028C");
@@ -84,13 +91,22 @@ db.getConn().close();
 			</tr>
 			<tr>
 				<td align="middle"><font color="#000000">GroupName</font></td>
-				<td><input maxlength=16 size=16 name="groupname" id="groupname"></td>
-			</tr>
-			
-			<tr>
-				<td><input maxLength=16 size=16 value="更新" type="submit" />
+				<td>
+					<input maxlength=16 size=16 name="groupname" id="groupname" readonly="readonly">
 				</td>
-				<td><input maxLength=16 size=16 value="取消" type="reset" />
+			</tr>			
+			<tr>
+				<td align="middle"><font color="#000000">CreateTime</font></td>
+				<td>
+					<input maxlength=16 size=16 name="createTime" id="createTime" readonly="readonly">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input maxLength=16 size=16 value="删除" type="submit" />
+				</td>
+				<td>
+					<input maxLength=16 size=16 value="取消" type="reset" />
 				</td>
 			</tr>
 			<tr>
@@ -98,9 +114,7 @@ db.getConn().close();
 					<a href="main.jsp">返回</a>
 				</td>
 			</tr>
-			</table>
-		<input type="hidden" name="changedGroupName" id="changedGroupName" />
-		</form>
-	
+			</table>		
+		</form>	
 	</body>
 </html>

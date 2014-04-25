@@ -36,6 +36,11 @@ rs.close();
 stmt.close();
 db.getConn().close();
 %>
+		<tr>
+			<td>
+				<a href="main.jsp">返回</a>
+			</td>
+		</tr>
 	</table>
     </body>
 </html>

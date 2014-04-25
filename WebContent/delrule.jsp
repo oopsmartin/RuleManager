@@ -8,13 +8,6 @@
 	<script type="text/javascript">
         var req;
         window.onload=function(){}
-        /*
-        function show()
-        {
-        	var value=document.getElementById('ID').value;
-        	alert(value+10);
-        }
-        */
         
         function change_select()
         {
@@ -157,26 +150,23 @@
             	document.getElementById('effectedTime').setAttribute('value',effectedTime[0].childNodes[0].nodeValue);                           
             if(expiredTime[0]!=null)
             	document.getElementById('expiredTime').setAttribute('value',expiredTime[0].childNodes[0].nodeValue); 
-            if(effectedHour[0]!=null)
-            	document.getElementById('effectedHour').setAttribute('value',effectedHour[0].childNodes[0].nodeValue);
-            if(expiredTime[0]!=null)
-            	document.getElementById('expiredHour').setAttribute('value',expiredHour[0].childNodes[0].nodeValue);
             alert("time valued");
         }           
-           
+       
+ 
         
     </script>
 	
-		<title>UpdateRule</title>
+	<title>DeleteGroup</title>
 	</head>
 	<body>
-		<form action="UpdateRule" method="post">
+		<form action="DeleteRule" method="post" id="deleteRule">
 			<table>
 			<tr>
 				<td align="middle" width=81><font color="#000000">ID</td>
 				<td width=81>
-					<select name="ID" id="ID" onChange= "change_select()">
-						<option value="default" selected="selected">序号</option> 
+					<select name="ID" id="ID" onChange= "change_select()"> 
+						<option value="default">序号</option>
 <%
 String sql = "select ID from rule order by ID";
 DBUtils db = new DBUtils("jdbc:mysql://127.0.0.1:3306/mtxrulemanager", "root", "8086W028C");
@@ -185,7 +175,7 @@ Statement stmt = db.getConn().createStatement();
 ResultSet rs = stmt.executeQuery(sql);
 while(rs.next())
 {
-String ID = rs.getString( "ID");
+String ID = rs.getString("ID");
 %> 
 						<option value= "<%=ID%>"> <%=ID%> </option> 
 <% 
@@ -387,7 +377,7 @@ db.getConn().close();
 			</tr>		
 			
 			<tr>
-				<td><input maxLength=16 size=16 value="更新" type="submit" />
+				<td><input maxLength=16 size=16 value="删除" type="submit" />
 				</td>
 				<td><input maxLength=16 size=16 value="取消" type="reset" />
 				</td>
@@ -398,7 +388,6 @@ db.getConn().close();
 				</td>
 			</tr>
 			</table>		
-		</form>
-	
+		</form>	
 	</body>
 </html>

@@ -4,7 +4,7 @@
 	<script type="text/javascript">
         var req;
         window.onload=function(){}
-                
+        
         function change_select()
         {
             var zhi=document.getElementById('ID').value;
@@ -48,49 +48,37 @@
             docInput.setAttribute('value',xInput[0].childNodes[0].nodeValue);
                            
          }
-             
+            
+         function redirect()
+         {
+        	 window.location.href = "listgroups.jsp";
+         }
         
     </script>
 	
-		<title>UpdateGroup</title>
+		<title>ShowGroup</title>
 	</head>
 	<body>
-		<form action="UpdateGroup" method="post">
+		<form action="SearchGroup" method="post">
 			<table>
 			<tr>
-				<td align="middle" width=81><font color="#000000">ID</td>
-				<td width=81>
-					<select name="ID" id="ID" onChange= "change_select()"> 
-<%
-String sql = "select ID from rulegroup order by ID";
-DBUtils db = new DBUtils("jdbc:mysql://127.0.0.1:3306/mtxrulemanager", "root", "8086W028C");
-System.out.println("here");
-Statement stmt = db.getConn().createStatement();
-ResultSet rs = stmt.executeQuery(sql);
-while(rs.next())
-{
-String ID = rs.getString( "ID");
-%> 
-						<option value= "<%=ID%>"> <%=ID%> </option> 
-<% 
-} 
-rs.close();
-stmt.close();
-db.getConn().close();
-%> 
-
-					</select>
+				<td align="middle" width=81><font color="#000000">GroupName</td>
+				<td>
+					<input maxLength=16 size=16 type="text" name="groupname" id="groupname">
+				</td>				
+			</tr>			
+			<tr>
+				<td>
+					<input maxLength=16 size=16 value="查看" type="submit" />
+					<input style="width: 60px; height: 23px;" value="所有" type="button" onclick="redirect()" />
+				</td>
+				<td>
+					<input maxLength=16 size=16 value="取消" type="reset" />
 				</td>
 			</tr>
 			<tr>
-				<td align="middle"><font color="#000000">GroupName</font></td>
-				<td><input maxlength=16 size=16 name="groupname" id="groupname"></td>
-			</tr>
-			
-			<tr>
-				<td><input maxLength=16 size=16 value="更新" type="submit" />
-				</td>
-				<td><input maxLength=16 size=16 value="取消" type="reset" />
+				<td>
+				
 				</td>
 			</tr>
 			<tr>
@@ -98,8 +86,7 @@ db.getConn().close();
 					<a href="main.jsp">返回</a>
 				</td>
 			</tr>
-			</table>
-		<input type="hidden" name="changedGroupName" id="changedGroupName" />
+			</table>		
 		</form>
 	
 	</body>

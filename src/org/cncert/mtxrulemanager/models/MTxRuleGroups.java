@@ -79,7 +79,7 @@ public class MTxRuleGroups {
 			pstmt.close();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}finally{
 			db.finalize();
@@ -103,7 +103,7 @@ public class MTxRuleGroups {
 			pstmt.close();			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}finally{
 			db.finalize();
@@ -119,15 +119,14 @@ public class MTxRuleGroups {
         	
         	db = new DBUtils("jdbc:mysql://127.0.0.1:3306/mtxrulemanager", "root", "8086W028C");
 			pstmt = db.getConn().prepareStatement(sql);
-			pstmt.setInt(1, o.getID());
-			
-			status = pstmt.executeUpdate();
-			
+			pstmt.setInt(1, o.getID());	
+			System.out.println("before execute");
+			status = pstmt.executeUpdate();	
+			System.out.println("after execute");
 			pstmt.close();
 			
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}finally{
 			db.finalize();
@@ -193,7 +192,7 @@ public class MTxRuleGroups {
 				list.add(group);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
     	
@@ -221,7 +220,7 @@ public ArrayList<MTxRuleGroup> getAll() {
 				list.add(group);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
     	

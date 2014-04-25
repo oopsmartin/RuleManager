@@ -26,6 +26,15 @@
 				<td><input maxlength=16 size=16 name="password" id="password" type="text" onclick="validate()"></td>
 				<td><span class="rq">*</span></td>
 			</tr>
+<%
+    if (session.isNew()) { //判断是否为新用户
+      
+      String username = request.getParameter("username");
+      String password = request.getParameter("password");
+      session.setAttribute("username", username); //将str 添加到session对象中
+      session.setAttribute("password", password);
+    }
+%>
 			<tr>
 				<td>
 					<input maxLength=16 size=16 value="登陆" type="button" onclick="validate()"/>

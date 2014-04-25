@@ -9,10 +9,9 @@ package org.cncert.mtxrulemanager.models;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Dictionary;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -258,7 +257,7 @@ private PreparedStatement pstmt = null ;
 			else
 				pstmt.setObject(1, null);			
 			if (condition.containsKey("EffectedTime"))				
-				pstmt.setDate(2, (java.sql.Date)condition.get("EffectedTime"));
+				pstmt.setTimestamp(2, (Timestamp)condition.get("EffectedTime"));
 			else
 				pstmt.setObject(2, null);
 			if(condition.containsKey("EventAction"))
@@ -270,7 +269,7 @@ private PreparedStatement pstmt = null ;
 			else
 				pstmt.setObject(4, null);			
 			if(condition.containsKey("ExpiredTime"))
-				pstmt.setDate(5, (java.sql.Date)condition.get("ExpiredTime"));
+				pstmt.setTimestamp(5, (Timestamp)condition.get("ExpiredTime"));
 			else
 				pstmt.setObject(5, null);
 			if(condition.containsKey("IsEnabled"))
@@ -286,7 +285,7 @@ private PreparedStatement pstmt = null ;
 			else
 				pstmt.setObject(8, null);
 			if(condition.containsKey("RegTime"))
-				pstmt.setDate(9, (java.sql.Date)condition.get("RegTime"));
+				pstmt.setTimestamp(9, (Timestamp)condition.get("RegTime"));
 			else
 				pstmt.setObject(9, null);
 			if(condition.containsKey("Remark"))
@@ -333,72 +332,35 @@ private PreparedStatement pstmt = null ;
 			
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()){
-				System.out.printf("rs ID is %d",rs.getInt("ID"));
-				System.out.println();
+				System.out.printf("rs ID is %d\n",rs.getInt("ID"));
+				
 				MTxRule rule = new MTxRule();
 				rule.setID(rs.getInt("ID"));
 				rule.setCreateBy(rs.getString("CreateBy"));
 				
-				StringBuffer deployPlaces = new StringBuffer();				
-				String deploy = new String();
-				int cursor = 0;
-				int i = 0;
-				int count = 0;
-				deployPlaces.append(rs.getString("deployPlaces"));
-				deploy = deployPlaces.toString();
-				System.out.println("before while deploy");
-				System.out.printf("deploy.length is %d",deploy.length());
-				System.out.println();
-				while(deploy.length()>0)
+				String deployPlaces = new String();			
+				
+				deployPlaces = rs.getString("deployPlaces");
+				String regex = "\t";
+				String[] deploy = deployPlaces.split(regex);
+				for(String item:deploy)
 				{
-					System.out.printf("deploy is %s", deploy);
-					System.out.println();
-					cursor = deploy.indexOf("\\t");
-					System.out.printf("cursor is %d",cursor);
-					System.out.println();
-					deploy = deploy.substring(cursor+2);
-					System.out.printf("deploy is %s", deploy);
-					System.out.println();
-					count++;
-					System.out.printf("deploy.length is %d",deploy.length());
-					System.out.println();
-				}
-				String[] strs = new String[count];
-				while(deployPlaces.length()>0)
-				{					
-					cursor = deployPlaces.indexOf("\\t");
-					strs[i] = deployPlaces.substring(0, cursor);
-					deployPlaces.delete(0, cursor+2);
-					i++;
-				}
-				rule.setDeployPlaces(strs);
+					System.out.printf("deploy places are: %s\n",item);
+				}				
+				rule.setDeployPlaces(deploy);
 				
 				rule.setEffectedTime(rs.getTimestamp("EffectedTime"));
 				rule.setEventAction(rs.getString("EventAction"));
 				rule.setExpiredTime(rs.getTimestamp("ExpiredTime"));
 				
-				StringBuffer groups = new StringBuffer();				
-				String group = new String();
-				cursor = 0;
-				i = 0;
-				count = 0;				
-				groups.append(rs.getString(3));
-				group = groups.toString();
-				while(group.length()>0)
+				String groups = new String();					
+				groups = rs.getString("Groups");
+				String[] group = groups.split(regex);
+				for(String grp:group)
 				{
-					cursor = group.indexOf("\\t");
-					group = group.substring(cursor+2);
-					count++;
-				}
-				strs = new String[count];
-				while(groups.length()>0)
-				{					
-					cursor = groups.indexOf("\\t");
-					strs[i] = groups.substring(0, cursor);
-					groups.delete(0, cursor+2);
-					i++;
-				}
-				rule.setGroups(strs);
+					System.out.printf("groups are : %s\n", grp);
+				}				
+				rule.setGroups(group);
 				
 				rule.setIsEnabled(rs.getBoolean("IsEnabled"));
 				rule.setMatchPattern(rs.getString("MatchPattern"));
@@ -458,19 +420,14 @@ private PreparedStatement pstmt = null ;
 				rule.setRuleNumber(rs.getString("RuleNumber"));
 				rule.setRuleType(rs.getString("RuleType"));
 				
-				String[] deployPlaces = new String[rule.getDeployPlaces().length];
-				for(int i=0;i<rule.getDeployPlaces().length;i++)
-				{
-					deployPlaces[i] = rule.getDeployPlaces(i);					
-				}
+				String[] deployPlaces = new String[4];
+				String regs = "\t";				
+				deployPlaces = rs.getString("DeployPlaces").split(regs);				
 				rule.setDeployPlaces(deployPlaces);
 				
-				String[] groups = new String[rule.getGroups().length];
-				for(int i=0;i<rule.getGroups().length;i++)
-				{
-					groups[i] = rule.getGroups(i);					
-				}
-				rule.setDeployPlaces(groups);
+				String[] groups = new String[4];				
+				groups = rs.getString("Groups").split(regs);				
+				rule.setGroups(groups);
 				
 				list.add(rule);
 				
